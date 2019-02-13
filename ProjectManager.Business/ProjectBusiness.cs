@@ -16,25 +16,38 @@ namespace ProjectManager.Business
         public List<ProjectEntity> GetAllProjects()
         {
             var projs = ProjRep.GetAllProjects();
-            List<ProjectEntity> projEntity = new List<ProjectEntity>();
+            List<ProjectEntity> projEntityList = new List<ProjectEntity>();
 
             foreach(Project proj in projs)
             {
-                projEntity.Add(Map.ConvertProjectModeltoEntity(proj));
+                var projEntity = Map.ConvertProjectModeltoEntity(proj);
+                if (proj.Tasks != null)
+                {
+                    projEntity.NoOfTasks = proj.Tasks.Count;
+                    projEntity.CompletedTasks = proj.Tasks.Where(s => s.Status == "Completed").ToList().Count;
+                }               
+
+                projEntityList.Add(projEntity);
             }
-            return projEntity;
+            return projEntityList;
         }
 
         public ProjectEntity GetProjDetails(int id)
         {
             var proj = ProjRep.GetProjDetail(id);
-            return Map.ConvertProjectModeltoEntity(proj);
+
+            var prjEntity = Map.ConvertProjectModeltoEntity(proj);
+            prjEntity.UserID = proj.Users.FirstOrDefault().User_ID;
+
+            return prjEntity;
         }
 
         public int SaveProjDetails(ProjectEntity projEn)
         {
             Project proj = Map.ConvertProjectEntitytoModel(projEn);
-            return ProjRep.SaveProjDetails(proj);
+            var projid = ProjRep.SaveProjDetails(proj);
+            return ProjRep.UpdateProjectIDintoUser(projEn.UserID, projid);
+
         }
 
         public int UpdateProjDetails(int id, ProjectEntity projEn)
@@ -51,26 +64,39 @@ namespace ProjectManager.Business
         public List<ProjectEntity> SerchProjbyName(string name)
         {
             var projs = ProjRep.SerchProjbyName(name);
-            List<ProjectEntity> projEntity = new List<ProjectEntity>();
+            List<ProjectEntity> projEntityList = new List<ProjectEntity>();
 
             foreach (Project proj in projs)
             {
-                projEntity.Add(Map.ConvertProjectModeltoEntity(proj));
+                var projEntity = Map.ConvertProjectModeltoEntity(proj);
+                if (proj.Tasks != null)
+                {
+                    projEntity.NoOfTasks = proj.Tasks.Count;
+                    projEntity.CompletedTasks = proj.Tasks.Where(s => s.Status == "Completed").ToList().Count;
+                }
+                projEntityList.Add(projEntity);
             }
-            return projEntity;
+            return projEntityList;
 
         }
 
         public List<ProjectEntity> SortingProject(string columnName)
         {
             var projs = ProjRep.SortingProj(columnName);
-            List<ProjectEntity> projEntity = new List<ProjectEntity>();
+            List<ProjectEntity> projEntityList = new List<ProjectEntity>();
 
             foreach (Project proj in projs)
             {
-                projEntity.Add(Map.ConvertProjectModeltoEntity(proj));
+                var projEntity = Map.ConvertProjectModeltoEntity(proj);
+                if (proj.Tasks != null)
+                {
+                    projEntity.NoOfTasks = proj.Tasks.Count;
+                    projEntity.CompletedTasks = proj.Tasks.Where(s => s.Status == "Completed").ToList().Count;
+                }
+
+                projEntityList.Add(projEntity);
             }
-            return projEntity;
+            return projEntityList;
         }
     }
 }

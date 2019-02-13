@@ -18,6 +18,9 @@ namespace ProjectManager.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Priority { get; set; }
+        public int NoOfTasks { get; set; }
+        public int CompletedTasks { get; set; }
+        public int UserID { get; set; }
         public List<TaskEntity> Tasks { get; set; }
         public  List<UserEntity> Users { get; set; }
     }

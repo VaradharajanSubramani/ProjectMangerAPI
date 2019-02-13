@@ -31,16 +31,16 @@ namespace ProjectMangerAPI.Controllers
         }
         [HttpPost]
         // POST: api/Tasks
-        public void SaveTask([FromBody]TaskEntity value)
+        public void SaveTask(TaskEntity value)
         {
             TaskBL.SaveTask(value);
         }
 
         // PUT: api/Tasks/5
         [HttpPut]
-        public void UpdateTask(int id, [FromBody]TaskEntity value)
+        public void UpdateTask(TaskEntity value)
         {
-            TaskBL.UpdateTask(id, value);
+            TaskBL.UpdateTask(value.TaskID, value);
         }
 
         [HttpDelete]
@@ -60,6 +60,11 @@ namespace ProjectMangerAPI.Controllers
         public List<TaskEntity> SortingTask(string columnName)
         {
            return TaskBL.SortingTasks(columnName);
+        }
+        [HttpGet]
+        public List<TaskEntity> SearchTasks(string name)
+        {
+            return TaskBL.SearchTasks(name);
         }
     }
 }

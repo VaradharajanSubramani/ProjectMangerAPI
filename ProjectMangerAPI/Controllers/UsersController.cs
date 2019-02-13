@@ -28,16 +28,16 @@ namespace ProjectMangerAPI.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public void SaveUser([FromBody]UserEntity value)
+        public void SaveUser(UserEntity value)
         {
             UserBL.SaveUserDetails(value);
         }
 
         // PUT: api/Users/5
         [HttpPut]
-        public void UpdateUser(int id, [FromBody]UserEntity value)
+        public void UpdateUser(UserEntity value)
         {
-            UserBL.UpdateUserDetail(id, value);
+            UserBL.UpdateUserDetail(value.UserID, value);
         }
 
         [HttpDelete]

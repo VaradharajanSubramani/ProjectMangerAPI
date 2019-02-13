@@ -41,9 +41,9 @@
           </Key>
           <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Lastname" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
           <Property Name="Employee_ID" Type="int" />
-          <Property Name="Project_ID" Type="int" Nullable="false" />
+          <Property Name="Project_ID" Type="int" />
           <Property Name="Task_ID" Type="int" />
         </EntityType>
         <Association Name="FK_Task_ParentTask">
@@ -71,7 +71,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
@@ -163,9 +163,9 @@
           </Key>
           <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Employee_ID" Type="Int32" />
-          <Property Name="Project_ID" Type="Int32" Nullable="false" />
+          <Property Name="Project_ID" Type="Int32" />
           <Property Name="Task_ID" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="Self.FK_Users_Project" FromRole="Users" ToRole="Project" />
           <NavigationProperty Name="Task" Relationship="Self.FK_Users_Task" FromRole="Users" ToRole="Task" />
@@ -195,7 +195,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
@@ -284,7 +284,7 @@
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
                 <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
                 <ScalarProperty Name="Task_ID" ColumnName="Task_ID" />

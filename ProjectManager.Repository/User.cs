@@ -16,9 +16,9 @@ namespace ProjectManager.Repository
     {
         public int User_ID { get; set; }
         public string FirstName { get; set; }
-        public string Lastname { get; set; }
+        public string LastName { get; set; }
         public Nullable<int> Employee_ID { get; set; }
-        public int Project_ID { get; set; }
+        public Nullable<int> Project_ID { get; set; }
         public Nullable<int> Task_ID { get; set; }
     
         public virtual Project Project { get; set; }

@@ -136,10 +136,10 @@ namespace ProjectManager.Business
         {
             UserEntity userEntity = new UserEntity();
             userEntity.UserID = user.User_ID;
-            userEntity.ProjectID = user.Project_ID;
+            userEntity.ProjectID = user.Project_ID??0;
             userEntity.TaskID = user.Task_ID??0;
             userEntity.FirstName = user.FirstName;
-            userEntity.Lastname = user.Lastname;
+            userEntity.LastName = user.LastName;
             userEntity.EmployeeID = user.Employee_ID??0;
 
             //if (user.Project != null)
@@ -157,7 +157,7 @@ namespace ProjectManager.Business
             user.Project_ID = userEntity.ProjectID;
             user.Task_ID = userEntity.TaskID;
             user.FirstName = userEntity.FirstName;
-            user.Lastname = userEntity.Lastname;
+            user.LastName = userEntity.LastName;
             user.Employee_ID = userEntity.EmployeeID;
 
             //if (userEntity.Project != null)

@@ -23,6 +23,7 @@ namespace ProjectManager.Entities
         public DateTime EndDate { get; set; }
         public int Priority { get; set; }
         public string Status { get; set; }
+        public int UserID { get; set; }
 
         public ParentTaskEntity ParentTask { get; set; }
         public ProjectEntity Project { get; set; }

@@ -47,6 +47,8 @@ namespace ProjectManager.Business
                     taskEntity.ParentTask = Map.ConvertTaskParentModeltoEntity(task.ParentTask);
                 if (task.Project != null)
                     taskEntity.Project = Map.ConvertProjectModeltoEntity(task.Project);
+                if (task.Users != null)
+                    taskEntity.UserID = task.Users.FirstOrDefault().User_ID;
             }
             return taskEntity;
 
@@ -56,7 +58,9 @@ namespace ProjectManager.Business
         public void SaveTask(TaskEntity value)
         {
             Repository.Task task = Map.ConvertTaskEntitytoModel(value);
-            TaskRep.SaveTask(task);
+            task.Parent_ID = task.Parent_ID == 0 ? 1 : task.Parent_ID;
+            int taskid =  TaskRep.SaveTask(task);
+            TaskRep.UpdateTaskinUser(taskid, value.UserID);
         }
 
 
@@ -96,9 +100,32 @@ namespace ProjectManager.Business
             var tasks = TaskRep.SortingTasks(columnName);
 
             List<TaskEntity> taskEntityList = new List<TaskEntity>();
-            foreach (Repository.Task task in tasks)
+            foreach (Repository.Task item in tasks)
             {
-                taskEntityList.Add(Map.ConvertTaskModeltoEntity(task));
+                var taskEntity = Map.ConvertTaskModeltoEntity(item);
+                if (item.ParentTask != null)
+                    taskEntity.ParentTask = Map.ConvertTaskParentModeltoEntity(item.ParentTask);
+                if (item.Project != null)
+                    taskEntity.Project = Map.ConvertProjectModeltoEntity(item.Project);
+
+                taskEntityList.Add(taskEntity);
+            }
+            return taskEntityList;
+        }
+        public List<TaskEntity> SearchTasks(string name)
+        {
+            var tasks = TaskRep.SearchTasks(name);
+
+            List<TaskEntity> taskEntityList = new List<TaskEntity>();
+            foreach (Repository.Task item in tasks)
+            {
+                var taskEntity = Map.ConvertTaskModeltoEntity(item);
+                if (item.ParentTask != null)
+                    taskEntity.ParentTask = Map.ConvertTaskParentModeltoEntity(item.ParentTask);
+                if (item.Project != null)
+                    taskEntity.Project = Map.ConvertProjectModeltoEntity(item.Project);
+
+                taskEntityList.Add(taskEntity);
             }
             return taskEntityList;
         }

@@ -29,8 +29,10 @@ namespace ProjectManager.Repository
             {
                 if (taskdetails != null)
                 {
+                    taskdetails.Status = "InProgress";
                     PMEntitites.Tasks.Add(taskdetails);
-                    return PMEntitites.SaveChanges();
+                    PMEntitites.SaveChanges();
+                    return taskdetails.Task_ID;
                 }
             }
             catch (Exception e)
@@ -169,6 +171,51 @@ namespace ProjectManager.Repository
                 throw;
             }
 
+        }
+
+        public List<Task> SearchTasks(string name)
+        {
+            try
+            {
+                List<Task> projs = new List<Task>();
+                if (!string.IsNullOrEmpty(name))
+                {
+                    projs = PMEntitites.Tasks.Where(x => x.Task1.Contains(name)).ToList();
+
+                }
+                else
+                {
+                    projs = PMEntitites.Tasks.ToList();
+                }
+                return projs;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public int UpdateTaskinUser(int taskid,int userid)
+        {
+            try
+            {
+                if (taskid != 0)
+                {
+                    User usr = PMEntitites.Users.Where(x => x.User_ID == userid).FirstOrDefault();
+                    usr.Task_ID = taskid;
+                    PMEntitites.Users.Add(usr);
+                    PMEntitites.Entry(usr).State = System.Data.Entity.EntityState.Modified;
+
+
+                    return PMEntitites.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return 0;
         }
     }
 }

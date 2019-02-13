@@ -28,16 +28,16 @@ namespace ProjectMangerAPI.Controllers
 
         // POST: api/Project
         [HttpPost]
-        public void SaveProject([FromBody]ProjectEntity value)
+        public void SaveProject(ProjectEntity value)
         {
             ProjBL.SaveProjDetails(value);
         }
 
         // PUT: api/Project/5
         [HttpPut]
-        public void UpdateProject(int id, [FromBody]ProjectEntity value)
+        public void UpdateProject(ProjectEntity value)
         {
-            ProjBL.UpdateProjDetails(id, value);
+            ProjBL.UpdateProjDetails(value.ProjectID, value);
         }
 
         // DELETE: api/Project/5

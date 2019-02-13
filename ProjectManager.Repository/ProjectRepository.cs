@@ -31,7 +31,8 @@ namespace ProjectManager.Repository
                 if (projdetails != null)
                 {
                     PMEntitites.Projects.Add(projdetails);
-                    return PMEntitites.SaveChanges();
+                    PMEntitites.SaveChanges();
+                    return projdetails.Project_ID;
                 }
             }
             catch (Exception e)
@@ -129,17 +130,43 @@ namespace ProjectManager.Repository
         {
             try
             {
+                List<Project> projs = new List<Project>();
                 if (!string.IsNullOrEmpty(name))
                 {
-                    var projs = PMEntitites.Projects.Where(x => x.Project1.Contains(name)).ToList();
-                    return projs;
+                    projs = PMEntitites.Projects.Where(x => x.Project1.Contains(name)).ToList();
+                    
                 }
+                else
+                {
+                    projs = PMEntitites.Projects.ToList();
+                }
+                return projs;
             }
             catch (Exception)
             {
                 throw;
             }
-            return null;
+            
+        }
+
+        public int UpdateProjectIDintoUser(int userId,int projectID)
+        {
+            try
+            {
+                var user = PMEntitites.Users.Where(x => x.User_ID == userId).FirstOrDefault();
+
+                user.Project_ID = projectID;
+
+                PMEntitites.Users.Add(user);
+                PMEntitites.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                return PMEntitites.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

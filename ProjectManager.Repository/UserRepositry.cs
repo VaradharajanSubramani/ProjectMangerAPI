@@ -30,6 +30,11 @@ namespace ProjectManager.Repository
             {
                 if (userdetails != null)
                 {
+                    if (userdetails.Task_ID == 0)
+                        userdetails.Task_ID = null;
+                    if (userdetails.Project_ID == 0)
+                        userdetails.Project_ID = null;
+
                     PMEntitites.Users.Add(userdetails);
                     return PMEntitites.SaveChanges();
                 }
@@ -68,9 +73,9 @@ namespace ProjectManager.Repository
 
                 user.Employee_ID = userdetails.Employee_ID;
                 user.FirstName = userdetails.FirstName;
-                user.Lastname = userdetails.Lastname;
-                user.Project_ID = userdetails.Project_ID;
-                user.Task_ID = userdetails.Task_ID;
+                user.LastName = userdetails.LastName;
+               // user.Project_ID = userdetails.Project_ID;
+                //user.Task_ID = userdetails.Task_ID;
 
                 PMEntitites.Users.Add(user);
                 PMEntitites.Entry(user).State = System.Data.Entity.EntityState.Modified;
@@ -109,7 +114,7 @@ namespace ProjectManager.Repository
                     case "FirstName":
                         return PMEntitites.Users.OrderBy(x => x.FirstName).ToList();
                     case "LastName":
-                        return PMEntitites.Users.OrderBy(x => x.Lastname).ToList();
+                        return PMEntitites.Users.OrderBy(x => x.LastName).ToList();
                     case "EmployeeId":
                         return PMEntitites.Users.OrderBy(x => x.Employee_ID).ToList();
                     default:
@@ -130,17 +135,22 @@ namespace ProjectManager.Repository
         {
             try
             {
-                if(!string.IsNullOrEmpty(name))
+                List<User> users = new List<User>();
+                if (!string.IsNullOrEmpty(name))
                 {
-                    var users = PMEntitites.Users.Where(x => x.FirstName.Contains(name) || x.Lastname.Contains(name)).ToList();
-                    return users;
+                     users = PMEntitites.Users.Where(x => x.FirstName.Contains(name) || x.LastName.Contains(name)).ToList();
+                   
                 }
+                else
+                {
+                     users = PMEntitites.Users.ToList();
+                }
+                return users;
             }
             catch (Exception)
             {
                 throw;
-            }
-            return null;
+            }            
         }
 
     }
