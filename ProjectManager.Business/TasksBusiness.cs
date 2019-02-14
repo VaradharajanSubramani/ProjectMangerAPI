@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using ProjectManager.Repository;
 using ProjectManager.Entities;
 
@@ -59,7 +59,9 @@ namespace ProjectManager.Business
         {
             Repository.Task task = Map.ConvertTaskEntitytoModel(value);
             task.Parent_ID = task.Parent_ID == 0 ? 1 : task.Parent_ID;
+
             int taskid =  TaskRep.SaveTask(task);
+            Thread.Sleep(5000);
             TaskRep.UpdateTaskinUser(taskid, value.UserID);
         }
 
