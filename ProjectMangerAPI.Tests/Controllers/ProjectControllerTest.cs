@@ -13,7 +13,7 @@ namespace ProjectMangerAPI.Tests.Controllers
    public class ProjectControllerTest
     {
         ProjectController prj = new ProjectController();
-        [TestMethod]
+      /*  [TestMethod]
         public void GetAllProjects_test()
         {
             var projs = prj.GetAllProjects();
@@ -48,6 +48,6 @@ namespace ProjectMangerAPI.Tests.Controllers
         {
             var prjs = prj.SortingProjects("StartDate");
             Assert.AreNotEqual(prjs.Count, 6);
-        }
+        }*/
     }
 }
