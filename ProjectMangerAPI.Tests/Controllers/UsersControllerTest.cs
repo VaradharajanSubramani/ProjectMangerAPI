@@ -13,7 +13,7 @@ namespace ProjectMangerAPI.Tests.Controllers
     public class UsersControllerTest
     {
         UsersController usr = new UsersController();
-        [TestMethod]
+       /* [TestMethod]
         public void GetAllUsers_test()
         {
             var users = usr.GetAllUsers();
